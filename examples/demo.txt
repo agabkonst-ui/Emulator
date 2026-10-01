@@ -1,0 +1,9 @@
+ls
+ls -l "my folder" file.txt
+cd /home/user
+cd "dir with spaces"
+foo
+cd a b
+ls "unclosed
+exit abc
+exit 0
