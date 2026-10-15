@@ -1,0 +1,11 @@
+# Стартовый скрипт: выполняется последовательно, ошибочные строки
+# пропускаются (комментарии и пустые строки не выводятся).
+ls
+ls -l "my folder" file.txt
+
+cd /home/user
+foo
+cd a b
+ls "unclosed
+cd "dir with spaces"
+exit
