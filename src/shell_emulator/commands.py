@@ -1,4 +1,6 @@
-"""Команды эмулятора: заглушки ls и cd, а также exit."""
+"""Команды эмулятора: заглушки ls и cd, exit и служебные команды VFS."""
+
+from .vfs import collect_stats, render_tree
 
 MAX_CD_ARGS = 1
 MAX_EXIT_ARGS = 1
@@ -48,16 +50,57 @@ def cmd_exit(args):
     raise ShellExit(code)
 
 
+def check_no_args(name, args):
+    """Проверяет, что служебной команде не переданы аргументы."""
+    if args:
+        raise CommandError(f"{name}: аргументы не поддерживаются")
+
+
+def require_vfs(name, vfs):
+    """Проверяет, что VFS загружена, иначе сообщает об ошибке."""
+    if vfs is None:
+        raise CommandError(f"{name}: VFS не загружена (укажите --vfs)")
+
+
+def cmd_vfs_info(args, vfs):
+    """Служебная команда: сведения о загруженной VFS."""
+    check_no_args("vfs-info", args)
+    require_vfs("vfs-info", vfs)
+    stats = collect_stats(vfs.root)
+    return "\n".join([
+        f"источник: {vfs.source}",
+        f"каталогов: {stats.dirs}",
+        f"файлов: {stats.files}",
+        f"размер: {stats.size} байт",
+        f"глубина: {stats.depth}",
+    ])
+
+
+def cmd_vfs_tree(args, vfs):
+    """Служебная команда: дерево каталогов и файлов VFS."""
+    check_no_args("vfs-tree", args)
+    require_vfs("vfs-tree", vfs)
+    return render_tree(vfs.root)
+
+
 COMMANDS = {
     "ls": cmd_ls,
     "cd": cmd_cd,
     "exit": cmd_exit,
 }
 
+VFS_COMMANDS = {
+    "vfs-info": cmd_vfs_info,
+    "vfs-tree": cmd_vfs_tree,
+}
 
-def execute(name, args):
+
+def execute(name, args, vfs=None):
     """Выполняет команду и возвращает её вывод (строку или None)."""
     handler = COMMANDS.get(name)
-    if handler is None:
-        raise CommandError(f"{name}: команда не найдена")
-    return handler(args)
+    if handler is not None:
+        return handler(args)
+    vfs_handler = VFS_COMMANDS.get(name)
+    if vfs_handler is not None:
+        return vfs_handler(args, vfs)
+    raise CommandError(f"{name}: команда не найдена")

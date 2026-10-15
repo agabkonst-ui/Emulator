@@ -15,6 +15,7 @@ def run_session(lines):
     """Прогоняет список строк через REPL, возвращает (код, out, err)."""
     feed = iter(lines)
     def read(_prompt):
+        """Подаёт заготовленные строки вместо ввода пользователя."""
         try:
             return next(feed)
         except StopIteration:

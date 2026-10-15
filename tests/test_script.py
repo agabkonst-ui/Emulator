@@ -83,8 +83,9 @@ class MainTest(ScriptFileCase):
     def test_debug_output_with_params(self):
         """Заданные параметры печатаются в отладочном выводе."""
         path = self.make_script("exit\n")
-        _code, out, _err = run_main(["--vfs", "/data/vfs", "--script", path])
-        self.assertIn("vfs = /data/vfs", out)
+        vfs_path = self.make_script('{"type": "dir"}')
+        _code, out, _err = run_main(["--vfs", vfs_path, "--script", path])
+        self.assertIn(f"vfs = {vfs_path}", out)
         self.assertIn(f"script = {path}", out)
 
     def test_script_then_interactive(self):

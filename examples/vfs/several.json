@@ -1,0 +1,22 @@
+{
+  "type": "dir",
+  "children": {
+    "readme.txt": {
+      "type": "file",
+      "content": "Пример VFS с несколькими файлами"
+    },
+    "notes.txt": {
+      "type": "file",
+      "encoding": "text",
+      "content": "Вторая строка\nТретья строка"
+    },
+    "logo.bin": {
+      "type": "file",
+      "encoding": "base64",
+      "content": "iVBORw0KGgo="
+    },
+    "empty.txt": {
+      "type": "file"
+    }
+  }
+}
