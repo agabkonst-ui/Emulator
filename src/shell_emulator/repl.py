@@ -17,13 +17,13 @@ def build_prompt():
     return f"{user}@{host}:{HOME_MARK}$ "
 
 
-def run_line(line, out, err):
+def run_line(line, out, err, vfs=None):
     """Выполняет одну строку ввода, печатая результат или ошибку."""
     try:
         name, args = parse_line(line)
         if name is None:
             return
-        output = execute(name, args)
+        output = execute(name, args, vfs)
     except (ParseError, CommandError) as error:
         print(f"ошибка: {error}", file=err)
         return
@@ -31,7 +31,8 @@ def run_line(line, out, err):
         print(output, file=out)
 
 
-def repl(read=input, out=sys.stdout, err=sys.stderr, prompt=None):
+def repl(read=input, out=sys.stdout, err=sys.stderr, prompt=None,
+         vfs=None):
     """Запускает цикл чтения команд и возвращает код возврата."""
     if prompt is None:
         prompt = build_prompt()
@@ -45,6 +46,6 @@ def repl(read=input, out=sys.stdout, err=sys.stderr, prompt=None):
             print(file=out)
             continue
         try:
-            run_line(line, out, err)
+            run_line(line, out, err, vfs)
         except ShellExit as stop:
             return stop.code

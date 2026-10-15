@@ -1,0 +1,45 @@
+{
+  "type": "dir",
+  "children": {
+    "home": {
+      "type": "dir",
+      "children": {
+        "user": {
+          "type": "dir",
+          "children": {
+            "docs": {
+              "type": "dir",
+              "children": {
+                "report.txt": {
+                  "type": "file",
+                  "content": "Отчёт"
+                },
+                "data.bin": {
+                  "type": "file",
+                  "encoding": "base64",
+                  "content": "AAECAwQFBgc="
+                }
+              }
+            },
+            "todo.txt": {
+              "type": "file",
+              "content": "купить молоко"
+            }
+          }
+        }
+      }
+    },
+    "etc": {
+      "type": "dir",
+      "children": {
+        "hosts": {
+          "type": "file",
+          "content": "127.0.0.1 localhost"
+        }
+      }
+    },
+    "tmp": {
+      "type": "dir"
+    }
+  }
+}

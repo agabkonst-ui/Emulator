@@ -17,7 +17,7 @@ def is_skipped(line):
     return not stripped or stripped.startswith(COMMENT_MARK)
 
 
-def run_script(lines, prompt, out, err):
+def run_script(lines, prompt, out, err, vfs=None):
     """Выполняет строки скрипта, имитируя диалог с пользователем.
 
     Для каждой строки выводится приглашение с введённой командой, затем
@@ -29,5 +29,5 @@ def run_script(lines, prompt, out, err):
             continue
         print(f"{prompt}{line}", file=out)
         out.flush()
-        run_line(line, out, err)
+        run_line(line, out, err, vfs)
         out.flush()
