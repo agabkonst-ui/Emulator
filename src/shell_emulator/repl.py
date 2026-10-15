@@ -31,9 +31,10 @@ def run_line(line, out, err):
         print(output, file=out)
 
 
-def repl(read=input, out=sys.stdout, err=sys.stderr):
+def repl(read=input, out=sys.stdout, err=sys.stderr, prompt=None):
     """Запускает цикл чтения команд и возвращает код возврата."""
-    prompt = build_prompt()
+    if prompt is None:
+        prompt = build_prompt()
     while True:
         try:
             line = read(prompt)
