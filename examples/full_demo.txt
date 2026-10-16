@@ -21,4 +21,4 @@ vfs-info extra
 vfs-tree extra
 
 # Завершение с кодом возврата
-exit 0
+
