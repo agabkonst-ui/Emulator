@@ -8,6 +8,7 @@ import unittest
 
 from shell_emulator.cli import VFS_ERROR_CODE, main
 from shell_emulator.commands import CommandError, execute
+from shell_emulator.session import new_session
 from shell_emulator.vfs import (
     VfsDir, VfsError, VfsFile, collect_stats, load_vfs, render_tree)
 
@@ -126,21 +127,21 @@ class VfsCommandsTest(VfsFileCase):
 
     def test_vfs_info_and_tree(self):
         """Команды vfs-info и vfs-tree работают с загруженной VFS."""
-        vfs = load_vfs(self.make_json(SAMPLE))
-        self.assertIn("файлов: 3", execute("vfs-info", [], vfs))
-        self.assertEqual(execute("vfs-tree", [], vfs), EXPECTED_TREE)
+        session = new_session(load_vfs(self.make_json(SAMPLE)))
+        self.assertIn("файлов: 3", execute("vfs-info", [], session))
+        self.assertEqual(execute("vfs-tree", [], session), EXPECTED_TREE)
 
     def test_commands_need_vfs(self):
         """Без VFS команды сообщают об ошибке."""
         for name in ("vfs-info", "vfs-tree"):
             with self.assertRaises(CommandError):
-                execute(name, [], None)
+                execute(name, [], new_session())
 
     def test_commands_reject_arguments(self):
         """Лишние аргументы — ошибка."""
-        vfs = load_vfs(self.make_json(SAMPLE))
+        session = new_session(load_vfs(self.make_json(SAMPLE)))
         with self.assertRaises(CommandError):
-            execute("vfs-tree", ["x"], vfs)
+            execute("vfs-tree", ["x"], session)
 
     def test_main_reports_load_error(self):
         """Ошибка загрузки VFS завершает запуск с кодом 3."""

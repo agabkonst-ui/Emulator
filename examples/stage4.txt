@@ -1,0 +1,100 @@
+# Стартовый скрипт этапа 4: ls, cd, pwd, history, tail.
+# Запуск: ./run.sh --vfs examples/vfs/stage4.json --script examples/stage4.txt
+# Все режимы команд, работа с VFS и обработка ошибок.
+
+# pwd: текущий каталог (сразу после запуска — корень VFS)
+pwd
+pwd -P
+pwd extra
+
+# ls: без аргументов, скрытые файлы (-a), длинный формат (-l), порядок (-r)
+ls
+ls -a
+ls -l
+ls -la
+ls -r
+ls -lar
+
+# ls: путь к каталогу, к файлу, несколько путей сразу, абсолютный путь
+ls home/user
+ls /home/user/docs
+ls readme.txt
+ls -l readme.txt data.bin
+ls home tmp readme.txt
+
+# ls: ошибки (верные пути всё равно выводятся)
+ls missing
+ls home missing
+ls -z
+
+# cd: переходы по относительным и абсолютным путям
+cd home
+pwd
+cd user/docs
+pwd
+ls -a
+cd ..
+pwd
+cd /tmp
+pwd
+
+# cd: без аргумента (в корень), '-' (в прежний каталог), '.' и '..'
+cd
+pwd
+cd /home/user
+cd -
+cd -
+cd .
+cd ../..
+pwd
+cd ../../..
+pwd
+
+# cd: ошибки
+cd missing
+cd readme.txt
+cd home user
+cd -x
+
+# tail: по умолчанию 10 последних строк
+tail log.txt
+
+# tail: -n (разные формы записи), +N (начиная с N-й строки), -c (байты)
+tail -n 3 log.txt
+tail -n3 log.txt
+tail -4 log.txt
+tail -n +14 log.txt
+tail -n 0 log.txt
+tail -c 8 log.txt
+tail -c +30 log.txt
+
+# tail: файл без перевода строки в конце, пустой файл
+tail -n 2 notes.txt
+tail empty.txt
+
+# tail: несколько файлов, заголовки (-q убирает, -v добавляет)
+tail -n 2 readme.txt notes.txt
+tail -q -n 1 readme.txt notes.txt
+tail -v -n 1 notes.txt
+tail -n 1 -- home/user/todo.txt
+
+# tail: ошибки (для верных файлов вывод сохраняется)
+tail
+tail missing
+tail home
+tail -n 1 readme.txt missing
+tail -n x log.txt
+tail -n
+tail -z log.txt
+
+# history: вся история, последние N записей, ошибки, очистка
+history
+history 5
+history 0
+history x
+history -5
+history 1 2
+history -c
+history
+
+exit
