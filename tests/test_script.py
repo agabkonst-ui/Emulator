@@ -8,9 +8,11 @@ import unittest
 from shell_emulator.cli import SCRIPT_ERROR_CODE, main
 from shell_emulator.commands import ShellExit
 from shell_emulator.script import is_skipped, load_script, run_script
+from shell_emulator.session import new_session
 
-PROMPT = "u@h:~$ "
+PROMPT = "u@h:/$ "
 EXIT_CODE = 5
+PWD_RUNS = 2
 
 
 def run_main(argv, stdin_lines=()):
@@ -53,21 +55,22 @@ class RunScriptTest(unittest.TestCase):
     def test_echo_and_errors(self):
         """Вводится и выводится диалог, ошибочные строки пропускаются."""
         out, err = io.StringIO(), io.StringIO()
-        run_script(["ls a", "foo", "# note", "", "cd 1 2", "cd b"],
-                   PROMPT, out, err)
+        run_script(["pwd", "foo", "# note", "", "cd 1 2", "cd /"],
+                   out, err, new_session(), lambda _cwd: PROMPT)
         self.assertEqual(
             out.getvalue(),
-            f"{PROMPT}ls a\nls a\n{PROMPT}foo\n{PROMPT}cd 1 2\n"
-            f"{PROMPT}cd b\ncd b\n")
+            f"{PROMPT}pwd\n/\n{PROMPT}foo\n{PROMPT}cd 1 2\n"
+            f"{PROMPT}cd /\n")
         self.assertEqual(err.getvalue().count("ошибка"), 2)
 
     def test_exit_stops_script(self):
         """Команда exit прерывает скрипт кодом возврата."""
         out, err = io.StringIO(), io.StringIO()
         with self.assertRaises(ShellExit) as ctx:
-            run_script([f"exit {EXIT_CODE}", "ls"], PROMPT, out, err)
+            run_script([f"exit {EXIT_CODE}", "pwd"], out, err,
+                       new_session(), lambda _cwd: PROMPT)
         self.assertEqual(ctx.exception.code, EXIT_CODE)
-        self.assertNotIn("ls", out.getvalue().split("exit")[-1])
+        self.assertNotIn("pwd", out.getvalue())
 
 
 class MainTest(ScriptFileCase):
@@ -90,11 +93,10 @@ class MainTest(ScriptFileCase):
 
     def test_script_then_interactive(self):
         """После скрипта без exit начинается интерактивный режим."""
-        path = self.make_script("ls x\n")
-        code, out, _err = run_main(["--script", path], ["cd y"])
+        path = self.make_script("pwd\n")
+        code, out, _err = run_main(["--script", path], ["pwd"])
         self.assertEqual(code, 0)
-        self.assertIn("ls x", out)
-        self.assertIn("cd y", out)
+        self.assertEqual(out.splitlines().count("/"), PWD_RUNS)
 
     def test_script_exit_code(self):
         """Код exit из скрипта становится кодом возврата."""

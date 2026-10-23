@@ -4,8 +4,9 @@ import sys
 
 from .commands import ShellExit
 from .config import DEBUG_PREFIX, format_debug, parse_args
-from .repl import build_prompt, repl
+from .repl import repl
 from .script import load_script, run_script
+from .session import new_session
 from .vfs import VfsError, format_summary, load_vfs
 
 SCRIPT_ERROR_CODE = 2
@@ -63,9 +64,9 @@ def main(argv=None, read=input, out=sys.stdout, err=sys.stderr):
     except StartupError as error:
         print(f"ошибка: {error}", file=err)
         return error.code
-    prompt = build_prompt()
+    session = new_session(vfs)
     try:
-        run_script(lines, prompt, out, err, vfs)
+        run_script(lines, out, err, session)
     except ShellExit as stop:
         return stop.code
-    return repl(read, out, err, prompt, vfs)
+    return repl(read, out, err, session)

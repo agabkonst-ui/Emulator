@@ -1,17 +1,19 @@
-# Стартовый скрипт этапов 1-3: все команды, режимы и ошибки.
+# Стартовый скрипт этапов 1-3: общие команды, кавычки, ошибки, VFS.
+# Команды этапа 4 (ls, cd, pwd, history, tail) — в examples/stage4.txt.
 # Запуск: ./run.sh --vfs examples/vfs/deep.json --script examples/full_demo.txt
 
-# Этап 1: заглушки ls и cd, кавычки
+# Этап 1: парсер с кавычками и простые команды
 ls
-ls -l "my folder" file.txt
 cd /home/user
-cd 'dir with spaces'
+pwd
+ls "docs" '/etc'
 ls "a \"quoted\" name"
 
-# Этап 1: ошибки (строки пропускаются, работа продолжается)
+# Ошибки (строки пропускаются, работа продолжается)
 foo
 cd a b
 ls "unclosed
+ls -l "my folder" file.txt
 exit abc
 
 # Этап 3: служебные команды VFS
@@ -21,4 +23,4 @@ vfs-info extra
 vfs-tree extra
 
 # Завершение с кодом возврата
-
+exit 0

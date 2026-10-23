@@ -3,6 +3,7 @@
 SINGLE_QUOTE = "'"
 DOUBLE_QUOTE = '"'
 BACKSLASH = "\\"
+NOT_FOUND = -1
 DOUBLE_QUOTE_ESCAPABLE = (DOUBLE_QUOTE, BACKSLASH)
 
 
@@ -16,7 +17,7 @@ def _read_single_quoted(line, pos):
     Возвращает прочитанный текст и позицию после закрывающей кавычки.
     """
     end = line.find(SINGLE_QUOTE, pos)
-    if end == -1:
+    if end == NOT_FOUND:
         raise ParseError("незакрытая одинарная кавычка")
     return line[pos:end], end + 1
 

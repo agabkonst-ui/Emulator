@@ -1,0 +1,59 @@
+{
+  "type": "dir",
+  "children": {
+    "readme.txt": {
+      "type": "file",
+      "content": "Пример VFS для этапа 4\n"
+    },
+    ".hidden": {
+      "type": "file",
+      "content": "скрытый файл\n"
+    },
+    "log.txt": {
+      "type": "file",
+      "content": "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15\n"
+    },
+    "notes.txt": {
+      "type": "file",
+      "content": "первая\nвторая\nтретья без перевода строки"
+    },
+    "data.bin": {
+      "type": "file",
+      "encoding": "base64",
+      "content": "AAECAwQFBgc="
+    },
+    "empty.txt": {
+      "type": "file"
+    },
+    "home": {
+      "type": "dir",
+      "children": {
+        "user": {
+          "type": "dir",
+          "children": {
+            "todo.txt": {
+              "type": "file",
+              "content": "купить молоко\nпозвонить маме\n"
+            },
+            "docs": {
+              "type": "dir",
+              "children": {
+                "report.txt": {
+                  "type": "file",
+                  "content": "Отчёт\nза квартал\n"
+                },
+                ".draft": {
+                  "type": "file",
+                  "content": "черновик\n"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "tmp": {
+      "type": "dir"
+    }
+  }
+}

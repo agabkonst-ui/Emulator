@@ -6,11 +6,12 @@ import json
 from collections import namedtuple
 from dataclasses import dataclass, field
 
+from .paths import PATH_SEPARATOR, split_path
+
 TYPE_DIR = "dir"
 TYPE_FILE = "file"
 ENCODING_TEXT = "text"
 ENCODING_BASE64 = "base64"
-PATH_SEPARATOR = "/"
 RESERVED_NAMES = (".", "..")
 TREE_BRANCH = "|-- "
 TREE_LAST = "`-- "
@@ -121,6 +122,18 @@ def load_vfs(path):
     if not isinstance(root, VfsDir):
         raise VfsError("корень VFS должен быть каталогом")
     return Vfs(path, root)
+
+
+def find_node(root, path):
+    """Возвращает узел по абсолютному нормализованному пути или None."""
+    node = root
+    for part in split_path(path):
+        if not isinstance(node, VfsDir):
+            return None
+        node = node.children.get(part)
+        if node is None:
+            return None
+    return node
 
 
 def iter_nodes(directory, depth=1):
