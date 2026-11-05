@@ -8,3 +8,12 @@ dist/
 *.egg-info/
 .idea/
 .vscode/
+Python/
+*.zip
+*.7z
+*.tar
+*.gz
+*.exe
+*.dll
+*.pyd
+*.pdf

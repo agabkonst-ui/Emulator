@@ -1,0 +1,117 @@
+{
+  "type": "dir",
+  "children": {
+    "docs": {
+      "type": "dir",
+      "children": {
+        "readme.txt": {
+          "type": "file",
+          "content": "bGluZSAxCmxpbmUgMgpsaW5lIDMK",
+          "encoding": "base64"
+        }
+      }
+    },
+    "archive": {
+      "type": "dir",
+      "children": {}
+    },
+    "projects": {
+      "type": "dir",
+      "children": {
+        "demo": {
+          "type": "dir",
+          "children": {
+            "src": {
+              "type": "dir",
+              "children": {
+                "main.txt": {
+                  "type": "file",
+                  "content": "ZGVtbyBzb3VyY2UK",
+                  "encoding": "base64"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "space name.txt": {
+      "type": "file",
+      "content": "cXVvdGVkIG5hbWUK",
+      "encoding": "base64"
+    },
+    "source.txt": {
+      "type": "file",
+      "content": "bmV3IGNvbnRlbnQK",
+      "encoding": "base64"
+    },
+    "target.txt": {
+      "type": "file",
+      "content": "b2xkIGNvbnRlbnQK",
+      "encoding": "base64"
+    },
+    "one.txt": {
+      "type": "file",
+      "content": "b25lCg==",
+      "encoding": "base64"
+    },
+    "two.txt": {
+      "type": "file",
+      "content": "dHdvCg==",
+      "encoding": "base64"
+    },
+    "-dash.txt": {
+      "type": "file",
+      "content": "ZGFzaAo=",
+      "encoding": "base64"
+    },
+    "empty-replace": {
+      "type": "dir",
+      "children": {
+        "child.txt": {
+          "type": "file",
+          "content": "a2VwdAo=",
+          "encoding": "base64"
+        }
+      }
+    },
+    "blocked-replace": {
+      "type": "dir",
+      "children": {
+        "child.txt": {
+          "type": "file",
+          "content": "a2VwdAo=",
+          "encoding": "base64"
+        }
+      }
+    },
+    "destinations": {
+      "type": "dir",
+      "children": {
+        "empty-replace": {
+          "type": "dir",
+          "children": {}
+        },
+        "blocked-replace": {
+          "type": "dir",
+          "children": {
+            "existing.txt": {
+              "type": "file",
+              "content": "b2xkCg==",
+              "encoding": "base64"
+            }
+          }
+        }
+      }
+    },
+    "binary.dat": {
+      "type": "file",
+      "encoding": "base64",
+      "content": "/wABAg=="
+    },
+    "default.txt": {
+      "type": "file",
+      "content": "default overwrite\n"
+    }
+  }
+}

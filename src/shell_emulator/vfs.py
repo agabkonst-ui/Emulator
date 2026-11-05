@@ -17,6 +17,7 @@ TREE_BRANCH = "|-- "
 TREE_LAST = "`-- "
 TREE_PIPE = "|   "
 TREE_INDENT = "    "
+INDEX_OFFSET = 1
 
 VfsStats = namedtuple("VfsStats", "dirs files size depth")
 
@@ -167,7 +168,7 @@ def tree_lines(directory, prefix):
     """Генерирует строки дерева каталога с отступом prefix."""
     items = sorted(directory.children.items())
     for index, (name, child) in enumerate(items):
-        last = index == len(items) - 1
+        last = index == len(items) - INDEX_OFFSET
         is_dir = isinstance(child, VfsDir)
         branch = TREE_LAST if last else TREE_BRANCH
         yield f"{prefix}{branch}{name}{PATH_SEPARATOR if is_dir else ''}"

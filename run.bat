@@ -1,7 +1,13 @@
 @echo off
+setlocal
 cd /d "%~dp0"
 set PYTHONPATH=src
 set PYTHONUTF8=1
+set PYTHONDONTWRITEBYTECODE=1
+if defined PYTHON_EXE (
+    "%PYTHON_EXE%" -B -m shell_emulator %*
+    exit /b
+)
 set "PY="
 for %%P in (python3 python py) do if not defined PY (
     cmd /c "%%P -c "import sys"" >nul 2>nul && set "PY=%%P"

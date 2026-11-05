@@ -1,8 +1,9 @@
-"""Реестр команд эмулятора: ls, cd, pwd, history, tail, exit и служебные."""
+"""Реестр команд эмулятора: навигация, история, tail, mv и служебные."""
 
 from .errors import CommandError, ShellExit
 from .fs_commands import cmd_cd, cmd_ls, cmd_pwd
 from .history import cmd_history
+from .move import cmd_mv
 from .tail import cmd_tail
 from .vfs import collect_stats, render_tree
 
@@ -63,6 +64,7 @@ COMMANDS = {
     "pwd": cmd_pwd,
     "history": cmd_history,
     "tail": cmd_tail,
+    "mv": cmd_mv,
     "exit": cmd_exit,
     "vfs-info": cmd_vfs_info,
     "vfs-tree": cmd_vfs_tree,

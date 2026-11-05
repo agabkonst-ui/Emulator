@@ -13,6 +13,7 @@ QUIET_OPTION = "q"
 VERBOSE_OPTION = "v"
 FROM_START_MARK = "+"
 START_OFFSET = 1
+LAST_LINE_INDEX = -1
 SINGLE_FILE = 1
 NEWLINE = "\n"
 HEADER_FORMAT = "==> {} <=="
@@ -104,7 +105,7 @@ def tail_text(data, options):
         text = cut(data, options).decode("utf-8", errors="replace")
         return strip_newline(text)
     lines = data.decode("utf-8", errors="replace").split(NEWLINE)
-    if lines[-1] == "":
+    if lines[LAST_LINE_INDEX] == "":
         lines.pop()
     return NEWLINE.join(cut(lines, options))
 

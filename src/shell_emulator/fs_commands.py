@@ -12,6 +12,7 @@ LS_FLAGS = ALL_FLAG + LONG_FLAG + REVERSE_FLAG
 PWD_FLAGS = "LP"
 MAX_CD_ARGS = 1
 SINGLE_OPERAND = 1
+FIRST_OPERAND = 0
 PREVIOUS_DIR = "-"
 KIND_DIR = "d"
 KIND_FILE = "-"
@@ -125,7 +126,7 @@ def cmd_cd(args, session):
         raise CommandError(f"cd: {target}: не является каталогом")
     session.oldpwd = session.cwd
     session.cwd = session.absolute(target)
-    return session.cwd if args and args[0] == PREVIOUS_DIR else None
+    return session.cwd if args and args[FIRST_OPERAND] == PREVIOUS_DIR else None
 
 
 def cmd_pwd(args, session):

@@ -1,0 +1,56 @@
+# All supported mv modes; every run starts with a fresh VFS.
+pwd
+ls
+tail docs/readme.txt
+mv docs/readme.txt docs/renamed.txt
+tail docs/renamed.txt
+mv docs/renamed.txt archive/
+ls archive
+mv projects projects-renamed
+ls projects-renamed/demo/src
+mv projects-renamed archive
+ls archive/projects-renamed/demo/src
+mv "space name.txt" "renamed file.txt"
+mv -n source.txt target.txt
+tail source.txt
+tail target.txt
+mv -f source.txt target.txt
+tail target.txt
+mv one.txt two.txt archive
+ls archive
+mv -- -dash.txt dash.txt
+mv ./dash.txt ./docs/../archive/dash.txt
+cd archive/projects-renamed/demo/src
+mv /archive/projects-renamed /projects
+pwd
+cd /
+mv -f -n target.txt "renamed file.txt"
+tail target.txt
+mv -n -f target.txt "renamed file.txt"
+tail "renamed file.txt"
+mv empty-replace destinations
+ls destinations/empty-replace
+mv binary.dat archive
+tail -c 4 archive/binary.dat
+mv default.txt archive/renamed.txt
+tail archive/renamed.txt
+mv -fn archive/renamed.txt archive/one.txt
+mv -nf archive/renamed.txt archive/one.txt
+# Errors must not stop later commands.
+mv
+mv docs
+mv -z docs archive
+mv absent archive
+mv docs docs
+mv / archive
+mv projects projects/demo/src
+mv docs "renamed file.txt"
+mv "renamed file.txt" absent/new
+mv "renamed file.txt" missing/
+mv "renamed file.txt"/ archive
+mv docs archive absent
+mv blocked-replace destinations
+mv absent "renamed file.txt" archive
+ls archive
+history
+exit
